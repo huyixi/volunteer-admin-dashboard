@@ -1,26 +1,14 @@
-import Image from "next/image";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="/dashboard"
-            rel="noopener noreferrer"
-          >
-            Dashboard
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="/auth/login"
-            rel="noopener noreferrer"
-          >
-            Login
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+import { createClient } from "@/lib/supabase/server";
+
+export default async function HomePage() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.getClaims();
+  if (error || !data?.claims) {
+    redirect("/auth/login");
+  } else {
+    redirect("/dashboard");
+  }
 }

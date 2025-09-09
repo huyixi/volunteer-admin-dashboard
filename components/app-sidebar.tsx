@@ -33,8 +33,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { LogoutButton } from "@/components/logout-button";
-
-// import { createClient } from "@/lib/supabase/client";
+import { useUser } from "@/hooks/use-user";
 
 const data = {
   user: {
@@ -64,8 +63,8 @@ const data = {
       icon: IconFolder,
     },
     {
-      title: "Team",
-      url: "#",
+      title: "Volunteers",
+      url: "/volunteers",
       icon: IconUsers,
     },
   ],
@@ -154,6 +153,13 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useUser();
+  const userData = {
+    name: user?.id,
+    email: user?.email,
+    avatar: "https://supabase.com/dashboard/org/cfnertxvumfktptaoalg",
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -177,7 +183,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
         <LogoutButton />
       </SidebarFooter>
     </Sidebar>

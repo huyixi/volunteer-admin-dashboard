@@ -36,11 +36,6 @@ import { LogoutButton } from "@/components/logout-button";
 import { useUser } from "@/hooks/use-user";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -155,9 +150,9 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
   const userData = {
-    name: user?.id,
-    email: user?.email,
-    avatar: "https://supabase.com/dashboard/org/cfnertxvumfktptaoalg",
+    name: user?.id!,
+    email: user?.email!,
+    avatar: user?.email!,
   };
 
   return (

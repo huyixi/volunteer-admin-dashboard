@@ -150,9 +150,9 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
   const userData = {
-    name: user?.id!,
-    email: user?.email!,
-    avatar: user?.email!,
+    name: user?.id || "",
+    email: user?.email || "",
+    avatar: user?.email || "",
   };
 
   return (

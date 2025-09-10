@@ -5,8 +5,6 @@ import { VolunteerDataTable } from "@/components/volunteer-data-table";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-import tableData from "./data.json";
-
 export default function Page() {
   return (
     <SidebarProvider

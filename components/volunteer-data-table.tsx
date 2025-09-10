@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -16,7 +17,6 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -42,35 +42,35 @@ const data: Volunteer[] = [
     gender: 316,
     id_number: "pending",
     schools: ["School A"],
-    photos: ["photo1.jpg", "photo2.jpg"],
+    photos: ["file.svg", "next.svg"],
   },
   {
     name: "3u1reuv4",
     gender: 242,
     id_number: "processing",
     schools: ["School B"],
-    photos: ["photo3.jpg", "photo4.jpg"],
+    photos: ["file.svg", "next.svg"],
   },
   {
     name: "derv1ws0",
     gender: 837,
     id_number: "success",
     schools: ["School C"],
-    photos: ["photo5.jpg", "photo6.jpg"],
+    photos: ["file.svg", "next.svg"],
   },
   {
     name: "5kma53ae",
     gender: 837,
     id_number: "failed",
     schools: ["School D"],
-    photos: ["photo7.jpg", "photo8.jpg"],
+    photos: ["file.svg", "next.svg"],
   },
   {
     name: "bhqecj4p",
     gender: 721,
     id_number: "pending",
     schools: ["School E"],
-    photos: ["photo9.jpg", "photo10.jpg"],
+    photos: ["file.svg", "next.svg"],
   },
 ];
 
@@ -126,6 +126,31 @@ export const columns: ColumnDef<Volunteer>[] = [
     },
   },
   {
+    accessorKey: "photos", // this field should be an array of URLs or a single URL
+    header: "Photos",
+    cell: ({ row }) => {
+      const photos = row.getValue("photos");
+
+      // Normalize to array
+      const photoArray = Array.isArray(photos) ? photos : [photos];
+
+      if (!photoArray || photoArray.length === 0) return <div>-</div>;
+
+      return (
+        <div className="flex gap-1">
+          {photoArray.map((url: string, index: number) => (
+            <Image
+              key={index}
+              src={url}
+              alt={`Photo ${index + 1}`}
+              className="w-12 h-12 object-cover rounded"
+            />
+          ))}
+        </div>
+      );
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -150,31 +175,6 @@ export const columns: ColumnDef<Volunteer>[] = [
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      );
-    },
-  },
-  {
-    accessorKey: "photos", // this field should be an array of URLs or a single URL
-    header: "Photos",
-    cell: ({ row }) => {
-      const photos = row.getValue("photos");
-
-      // Normalize to array
-      const photoArray = Array.isArray(photos) ? photos : [photos];
-
-      if (!photoArray || photoArray.length === 0) return <div>-</div>;
-
-      return (
-        <div className="flex gap-1">
-          {photoArray.map((url: string, index: number) => (
-            <img
-              key={index}
-              src={url}
-              alt={`Photo ${index + 1}`}
-              className="w-12 h-12 object-cover rounded"
-            />
-          ))}
-        </div>
       );
     },
   },

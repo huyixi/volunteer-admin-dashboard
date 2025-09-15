@@ -1,20 +1,12 @@
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
+// middleware.ts
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  // update user's auth session
-  return await updateSession(request);
+export function middleware(req: NextRequest) {
+  return NextResponse.next();
 }
 
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
-};
+// // 配置作用范围：保护所有路由（不包括静态资源）
+// export const config = {
+//   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+// };

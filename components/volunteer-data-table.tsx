@@ -143,6 +143,8 @@ export const columns: ColumnDef<Volunteer>[] = [
               key={index}
               src={url}
               alt={`Photo ${index + 1}`}
+              width="200"
+              height="200"
               className="w-12 h-12 object-cover rounded"
             />
           ))}

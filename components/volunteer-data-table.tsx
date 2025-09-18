@@ -36,44 +36,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Volunteer[] = [
-  {
-    name: "m5gr84i9",
-    gender: 316,
-    id_number: "pending",
-    schools: ["School A"],
-    photos: ["file.svg", "next.svg"],
-  },
-  {
-    name: "3u1reuv4",
-    gender: 242,
-    id_number: "processing",
-    schools: ["School B"],
-    photos: ["file.svg", "next.svg"],
-  },
-  {
-    name: "derv1ws0",
-    gender: 837,
-    id_number: "success",
-    schools: ["School C"],
-    photos: ["file.svg", "next.svg"],
-  },
-  {
-    name: "5kma53ae",
-    gender: 837,
-    id_number: "failed",
-    schools: ["School D"],
-    photos: ["file.svg", "next.svg"],
-  },
-  {
-    name: "bhqecj4p",
-    gender: 721,
-    id_number: "pending",
-    schools: ["School E"],
-    photos: ["file.svg", "next.svg"],
-  },
-];
-
 export type Volunteer = {
   name: string;
   gender: number;
@@ -182,7 +144,7 @@ export const columns: ColumnDef<Volunteer>[] = [
   },
 ];
 
-export function VolunteerDataTable() {
+export function VolunteerDataTable({ data = [] }: { data: Volunteer[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

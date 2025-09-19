@@ -1,6 +1,17 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+const PUBLIC_ROUTES = [
+  '/login',
+  '/sign-up',
+  '/sign-up-success',
+  '/forgot-password',
+  '/update-password',
+  '/confirm',
+]
+
+const LOGIN_PATH = '/login'
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -38,14 +49,14 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims()
   const user = data?.claims
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
-  ) {
+  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+    request.nextUrl.pathname.startsWith(route)
+  )
+
+  if (!user && !isPublicRoute) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
-    url.pathname = '/auth/login'
+    url.pathname = LOGIN_PATH
     return NextResponse.redirect(url)
   }
 

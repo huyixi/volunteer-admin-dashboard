@@ -1,12 +1,11 @@
 // middleware.ts
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
 
-export function middleware(req: NextRequest) {
-  return NextResponse.next();
+export async function middleware(request: NextRequest) {
+  return updateSession(request);
 }
 
-// // 配置作用范围：保护所有路由（不包括静态资源）
-// export const config = {
-//   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
-// };
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};

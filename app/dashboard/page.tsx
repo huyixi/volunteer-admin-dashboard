@@ -17,10 +17,11 @@ export default function Page() {
     // The API endpoint is not implemented yet, so we are using mock data
     // const res = await fetch(`/api/users?page=${page}&limit=${limit}`);
     // const data = await res.json();
-    console.log("getUuuu");
-    const res = await fetch("/api/users");
-    const data = await res.json();
-    console.log("data", data);
+    fetch("/api/users?page=1&limit=10")
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data.data || []);
+      });
 
     // setUsers(data);
   }
